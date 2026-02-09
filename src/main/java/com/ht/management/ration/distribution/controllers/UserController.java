@@ -1,6 +1,6 @@
 package com.ht.management.ration.distribution.controllers;
 
-import com.ht.management.ration.distribution.constants.GlobalConstant;
+import com.ht.management.ration.distribution.constants.UserConstant;
 import com.ht.management.ration.distribution.exceptions.UserNotFoundException;
 import com.ht.management.ration.distribution.model.User;
 import com.ht.management.ration.distribution.services.UserServices;
@@ -31,10 +31,10 @@ public class UserController {
         if (user.getUsername() == null || user.getPassword() == null || user.getRole() == null) {
             return ResponseEntity
                     .badRequest()
-                    .body(GlobalConstant.USERNAME_PASSWORD_ROLE_REQUIRED);
+                    .body(UserConstant.USERNAME_PASSWORD_ROLE_REQUIRED);
         }
         User createdUser = userServices.createUser(user);
-        log.info(GlobalConstant.USER_CREATED_SUCCESSFULLY);
+        log.info(UserConstant.USER_CREATED_SUCCESSFULLY);
         return ResponseEntity.ok(createdUser);
     }
 
@@ -43,7 +43,7 @@ public class UserController {
         return userServices.getUserById(userId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> {
-                    log.error("{}{}", GlobalConstant.USER_NOT_FOUND, userId);
+                    log.error("{}{}", UserConstant.USER_NOT_FOUND, userId);
                     return ResponseEntity
                             .status(404)
                             .build();
@@ -55,7 +55,7 @@ public class UserController {
         return userServices.getUserByRole(role)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> {
-                    log.error("{}{}", GlobalConstant.USER_NOT_FOUND, role);
+                    log.error("{}{}", UserConstant.USER_NOT_FOUND, role);
                     return ResponseEntity
                             .status(404)
                             .build();
@@ -71,13 +71,13 @@ public class UserController {
     public ResponseEntity<?> updateUser(@RequestParam Long userId, @RequestBody User updatedUser) {
         try {
             User user = userServices.updateUser(userId, updatedUser);
-            log.info(GlobalConstant.USER_UPDATED_SUCCESSFULLY);
+            log.info(UserConstant.USER_UPDATED_SUCCESSFULLY);
             return ResponseEntity.ok(user);
         } catch (UserNotFoundException exception) {
-            log.error("{}{}, exception: {}", GlobalConstant.USER_NOT_FOUND, userId, exception.getMessage());
+            log.error("{}{}, exception: {}", UserConstant.USER_NOT_FOUND, userId, exception.getMessage());
             return ResponseEntity
                     .status(404)
-                    .body(GlobalConstant.USER_NOT_FOUND + userId);
+                    .body(UserConstant.USER_NOT_FOUND + userId);
         }
     }
 
@@ -85,13 +85,13 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         try {
             userServices.deleteUser(userId);
-            log.info(GlobalConstant.USER_DELETED_SUCCESSFULLY);
-            return ResponseEntity.ok(GlobalConstant.USER_DELETED_SUCCESSFULLY);
+            log.info(UserConstant.USER_DELETED_SUCCESSFULLY);
+            return ResponseEntity.ok(UserConstant.USER_DELETED_SUCCESSFULLY);
         } catch (UserNotFoundException exception) {
-            log.error("{}{}, exception: {}", GlobalConstant.USER_NOT_FOUND, userId, exception.getMessage());
+            log.error("{}{}, exception: {}", UserConstant.USER_NOT_FOUND, userId, exception.getMessage());
             return ResponseEntity
                     .status(404)
-                    .body(GlobalConstant.USER_NOT_FOUND + userId);
+                    .body(UserConstant.USER_NOT_FOUND + userId);
         }
     }
 }

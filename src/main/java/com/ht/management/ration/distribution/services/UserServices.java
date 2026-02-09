@@ -3,7 +3,7 @@ package com.ht.management.ration.distribution.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.ht.management.ration.distribution.constants.GlobalConstant;
+import com.ht.management.ration.distribution.constants.UserConstant;
 import com.ht.management.ration.distribution.exceptions.UserNotFoundException;
 import com.ht.management.ration.distribution.model.User;
 import com.ht.management.ration.distribution.repositories.UserRepository;
@@ -30,7 +30,7 @@ public class UserServices {
        try {
            return userRepository.findById(userId);
        } catch (UserNotFoundException exception) {
-           log.error(GlobalConstant.RESOURCE_NOT_FOUND + " userId: {}, exception: {}", userId, exception.getMessage());
+           log.error(UserConstant.RESOURCE_NOT_FOUND + " userId: {}, exception: {}", userId, exception.getMessage());
            return Optional.empty();
        }
    }
@@ -39,7 +39,7 @@ public class UserServices {
        try {
            return Optional.ofNullable(userRepository.findByRole(role));
        } catch (UserNotFoundException exception) {
-           log.error(GlobalConstant.RESOURCE_NOT_FOUND + " role: {}, exception: {}", role, exception.getMessage());
+           log.error(UserConstant.RESOURCE_NOT_FOUND + " role: {}, exception: {}", role, exception.getMessage());
            return Optional.empty();
        }
    }
@@ -58,14 +58,14 @@ public class UserServices {
                   user.setPhoneNumber(updatedUser.getPhoneNumber());
                   return userRepository.save(user);
               })
-              .orElseThrow(() -> new UserNotFoundException(GlobalConstant.USER_NOT_FOUND + userId));
+              .orElseThrow(() -> new UserNotFoundException(UserConstant.USER_NOT_FOUND + userId));
   }
 
   public void deleteUser(Long userId) {
       if (userRepository.existsById(userId)) {
           userRepository.deleteById(userId);
       } else {
-          throw new UserNotFoundException(GlobalConstant.USER_NOT_FOUND + userId);
+          throw new UserNotFoundException(UserConstant.USER_NOT_FOUND + userId);
       }
   }
 
