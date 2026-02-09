@@ -1,6 +1,6 @@
 package com.ht.management.ration.distribution.constants;
 
-public class GlobalConstant {
+public class UserConstant {
 
     public static final String USER_NOT_FOUND = "User not found with id: ";
     public static final String USER_CREATED_SUCCESSFULLY = "User created successfully.";
